@@ -1,0 +1,53 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}
+        {{ title|capfirst }}
+        {% endblock title %}
+    </title>
+
+    {% block css %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% endblock css %}
+
+</head>
+
+<body>
+
+    {% block content %}
+    {% endblock content %}
+    
+
+    {% block js %}
+
+    <script>
+        const payer = JSON.parse('{{ data | escapejs }}');
+    </script>
+    
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+    <!-- html2canvas -->
+    <script src="{% static 'js/html2canvas.js' %}"></script>
+    <!-- Javascript -->
+    <script src="{% static 'js/invoice.js' %}"></script>
+    
+    
+
+    {% endblock js %}
+    <!-- {% block expoJS %}
+    <script>
+        const payer = '{{ data|safe }}';
+    </script>
+    {% endblock expoJS %} -->
+
+</body>
+
+</html>
