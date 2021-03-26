@@ -149,8 +149,3 @@ cython_debug/
 # Postgres data
 postgress/
 
-# geekshop --->
-
-tmp
-
-# <--- geekshop

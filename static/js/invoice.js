@@ -247,13 +247,11 @@ var pay = [
 ];
 
 
-
 var date_obj = {
-    payer: payer,
+    payer: payer[0].fields.data,
     recipient: recipient,
     payments: pay 
 }
-
 
 
 // Добавим верхнюю часть Шапки
