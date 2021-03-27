@@ -2,9 +2,10 @@ from django.conf import settings
 from django.urls import path, include
 from django.views.generic.base import TemplateView
 from invoice import views
+import invoice.views as invoice
 
 urlpatterns = [
-    path('invoice/', views.main, name='invoice'),
+    path('invoice/', invoice.InvoiceViews.as_view(), name='invoice'),
 ]
 
 if settings.DEBUG:

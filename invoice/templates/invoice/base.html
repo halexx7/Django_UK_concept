@@ -26,10 +26,21 @@
 
     {% block js %}
 
-    <script>
-        const payer = JSON.parse('{{ data | escapejs }}');
-    </script>
+    <script id="hello-data" type="application/json">{{ appartaments }}</script>
+
     
+    <script>
+        const obj ={
+            'user': JSON.parse('{{ object_list | escapejs }}')[0].fields,
+            'appartaments': JSON.parse('{{ appartaments | escapejs }}')[0].fields,
+            'house': JSON.parse('{{ house | escapejs }}')[0].fields,
+            'city': JSON.parse('{{ city | escapejs }}')[0].fields,
+            'street': JSON.parse('{{ street | escapejs }}')[0].fields,
+            'uk': JSON.parse('{{ uk | escapejs }}')[0].fields,
+            'invoice': JSON.parse('{{ invoice | escapejs }}')[0].fields
+        }
+    </script>
+
     <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- jsPDF -->
@@ -44,7 +55,7 @@
     {% endblock js %}
     <!-- {% block expoJS %}
     <script>
-        const payer = '{{ data|safe }}';
+        const payer = '{{ context|safe }}';
     </script>
     {% endblock expoJS %} -->
 
