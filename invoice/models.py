@@ -10,16 +10,6 @@ class Invoice(models.Model):
     data = JSONField(verbose_name="payer")
 
 
-class TypeServices(models.Model):
-    name = models.CharField(verbose_name="name", max_length=128)
-    unit = models.CharField(verbose_name="unit", max_length=128)
-    standard = models.DecimalField(verbose_name="standard", max_digits=5, decimal_places=2)
-    rate = models.DecimalField(verbose_name="standard", max_digits=6, decimal_places=2)
-
-    def __str__(self):
-        return self.name
-
-
 class City(models.Model):
     city = models.CharField(verbose_name="city", max_length=128)
 
@@ -34,7 +24,6 @@ class Street(models.Model):
         return self.street
 
 
-
 class UK(models.Model):
     name = models.CharField(verbose_name="services", max_length=128)
     requisites = models.TextField(verbose_name="requisites")
@@ -42,6 +31,7 @@ class UK(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class House(models.Model):
     number = models.PositiveIntegerField(verbose_name="number")
@@ -51,9 +41,6 @@ class House(models.Model):
     sq_home = models.DecimalField(verbose_name="sq_home", max_digits=5, decimal_places=2)
     uk = models.ForeignKey(UK, on_delete=CASCADE)
 
-
-    def __str__(self):
-        return self.street
 
 class Appartament(models.Model):
     house = models.ForeignKey(House, on_delete=CASCADE)

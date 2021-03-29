@@ -9,6 +9,9 @@ from django.utils.safestring import mark_safe
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 from django.views.generic.detail import DetailView
 
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
+from django.views.generic.detail import DetailView
+
 
 from .models import UK, Invoice, House, Street, City, Appartament, User
 
