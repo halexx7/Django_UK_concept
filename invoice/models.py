@@ -68,3 +68,28 @@ class User(models.Model):
     name = models.CharField(verbose_name="user_name", max_length=128)
     appartament = models.ForeignKey(Appartament, on_delete=CASCADE, default=1)
     invoice = models.ForeignKey(Invoice, on_delete=CASCADE, default=1)
+
+
+class ServicesCategory(models.Model):
+    name = models.CharField(verbose_name="name_category", max_length=32)
+    is_active = models.BooleanField(verbose_name="category_is_active", db_index=True, default=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Services(models.Model):
+    category = models.ForeignKey(ServicesCategory, on_delete=models.CASCADE)
+    name = models.CharField(verbose_name="services", max_length=256)
+    unit = models.CharField(verbose_name="unit", max_length=32)
+    standart = models.DecimalField(verbose_name="standart", max_digits=8, decimal_places=4, default=0)
+    rate = models.DecimalField(verbose_name="rate", max_digits=7, decimal_places=3, default=0)
+    factor = models.DecimalField(verbose_name="factor", max_digits=3, decimal_places=2, default=0)
+    is_active = models.BooleanField(verbose_name="services_activ", db_index=True, default=True)
+
+    def __str__(self):
+        return f"{self.name} ({self.category.name})"
+
+    @staticmethod
+    def get_items():
+        return Services.objects.filter(is_active=True).order_by("category", "name")

@@ -22,15 +22,15 @@ def main(request):
 class InvoiceViews(ListView):
     context_object_name = 'user'
     template_name = 'invoice/main.html'
-    # queryset = serialize('json', User.objects.prefetch_related().all())
     queryset = mark_safe(serialize('json', User.objects.filter(pk=1)))
 
     def get_context_data(self, **kwargs):
         context = super(InvoiceViews, self).get_context_data(**kwargs)
         context['appartaments'] = mark_safe(serialize('json', Appartament.objects.all()))
-        context['house'] = mark_safe(serialize('json', House.objects.prefetch_related().all()))
-        context['city'] = mark_safe(serialize('json', City.objects.prefetch_related().all()))
-        context['street'] = mark_safe(serialize('json', Street.objects.prefetch_related().all()))
-        context['uk'] = mark_safe(serialize('json', UK.objects.prefetch_related().all()))
-        context['invoice'] = mark_safe(serialize('json', Invoice.objects.all().prefetch_related().all()))
+        context['house'] = mark_safe(serialize('json', House.objects.all()))
+        context['city'] = mark_safe(serialize('json', City.objects.all()))
+        context['street'] = mark_safe(serialize('json', Street.objects.all()))
+        context['uk'] = mark_safe(serialize('json', UK.objects.all()))
+        context['invoice'] = mark_safe(serialize('json', Invoice.objects.all()))
         return context
+
