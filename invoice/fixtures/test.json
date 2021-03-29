@@ -1,0 +1,15 @@
+[
+    {
+        "user":
+            {
+                "name": "Piter",
+                "appartaments": {
+                    "number": 38,
+                    "square": 58.34,
+                    "house": {
+                        "number": 100
+                    }
+                }
+            }
+    }
+]

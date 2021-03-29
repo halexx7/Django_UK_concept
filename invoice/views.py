@@ -1,32 +1,36 @@
-import datetime
-import random
-import json
-
 from django.conf import settings
+from django.contrib.postgres import fields
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import get_object_or_404, render
 from django.core.serializers import serialize
+from django.utils.safestring import mark_safe
 
 
-from .models import Payer, Invoice
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
+from django.views.generic.detail import DetailView
+
+
+from .models import UK, Invoice, House, Street, City, Appartament, User
+
 
 def main(request):
 
-    payer = serialize('json', Payer.objects.all())
-    invoice = serialize('json', Invoice.objects.all())
-   
-
-    # payer = {
-    #     "period": 'Январь 2021',
-    #     "name": 'ИВАНОВ ИВАН ИВАНОВИЧ',
-    #     "address": 'ул.Свободы, д.56, к.11',
-    #     "square": 80.20,
-    #     "num_resident": 5,
-    #     "uk": 'ООО "УК Жилищный стандарт", ул.Комсомольская, д.57, тел.:688-085;688-084, ИНН 7202225426 р/с 40702810538320000181 БИК 046577964 к/с 301018101000000000964 Филиал "Екатеринбургский" ОАО "Альфа-Банк"',
-    #     "personal_account": 407890098
-    # }
-
-    # payer_json = json.dumps(payer_test)
-
-    # payer_items = serialize('json', payer, fields=['period', 'name', 'address', 'square', 'num_resident', 'uk', 'personal_account'])
+    invoice = mark_safe(serialize('json', User.objects.filter(pk=1)))
     return render(request, "invoice/main.html", context={'data': invoice})
+
+
+class InvoiceViews(ListView):
+    context_object_name = 'user'
+    template_name = 'invoice/main.html'
+    # queryset = serialize('json', User.objects.prefetch_related().all())
+    queryset = mark_safe(serialize('json', User.objects.filter(pk=1)))
+
+    def get_context_data(self, **kwargs):
+        context = super(InvoiceViews, self).get_context_data(**kwargs)
+        context['appartaments'] = mark_safe(serialize('json', Appartament.objects.all()))
+        context['house'] = mark_safe(serialize('json', House.objects.prefetch_related().all()))
+        context['city'] = mark_safe(serialize('json', City.objects.prefetch_related().all()))
+        context['street'] = mark_safe(serialize('json', Street.objects.prefetch_related().all()))
+        context['uk'] = mark_safe(serialize('json', UK.objects.prefetch_related().all()))
+        context['invoice'] = mark_safe(serialize('json', Invoice.objects.all().prefetch_related().all()))
+        return context

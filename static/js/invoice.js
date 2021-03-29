@@ -1,20 +1,4 @@
-// // //Плательщик
-// var payer = {
-//     period: 'Январь 2021',
-//     name: 'ИВАНОВ ИВАН ИВАНОВИЧ',
-//     address: 'ул.Свободы, д.56, к.11',
-//     square: 80.20,
-//     num_resident: 5,
-//     uk: 'ООО "УК Жилищный стандарт", ул.Комсомольская, д.57, тел.:688-085;688-084, ИНН 7202225426 р/с 40702810538320000181 БИК 046577964 к/с 301018101000000000964 Филиал "Екатеринбургский" ОАО "Альфа-Банк"',
-//     personal_account: 407890098
-// }
-
 //Получатель
-var recipient = {
-    name: 'ОАО "Тюменский расчетно-информационный центр" р/с 40702810467020000045 ИНН 7204059654 Западно-сибирский банк ПАО Сбербанк г.Тюмень БИК 047102651 к/с 3010181080000000651',
-    url: 'ТРИЦ.РФ'
-}
-
 var pay = [
     {
         value: "взносы на капитальный ремонт",
@@ -246,27 +230,80 @@ var pay = [
     }
 ];
 
+//Конвертим дату в формат - Январь 2021
+function convertDate(item) {
+    let date = new Date(Date.parse(item))
 
-var date_obj = {
-    payer: payer[0].fields.data,
-    recipient: recipient,
-    payments: pay 
+    switch(date.getMonth()){
+        case 0:
+            return(` Январь ${date.getFullYear()} `);
+            break;
+        case 1:
+            return(` Февраль ${date.getFullYear()} `);
+            break;
+        case 2:
+            return(` Март ${date.getFullYear()} `);
+            break;
+        case 3:
+            return(` Апрель ${date.getFullYear()} `);
+            break;
+        case 4:
+            return(` Май ${date.getFullYear()} `);
+            break;
+        case 5:
+            return(` Июнь ${date.getFullYear()} `);
+            break;
+        case 6:
+            return(` Июль ${date.getFullYear()} `);
+            break;
+        case 7:
+            return(` Август ${date.getFullYear()} `);
+            break;
+        case 8:
+            return(` Сентябрь ${date.getFullYear()} `);
+            break;
+        case 9:
+            return(` Октябрь ${date.getFullYear()} `);
+            break;
+        case 10:
+            return(` Ноябрь ${date.getFullYear()} `);
+            break;
+        case 11:
+            return(` Декабрь ${date.getFullYear()} `);
+            break;
+    }
+}
+
+const obj ={
+    'user': user[0].fields,
+    'appartaments': appartaments[0].fields,
+    'house': house[0].fields,
+    'city': city[0].fields,
+    'street': street[0].fields,
+    'uk': uk[0].fields,
+    'invoice': invoice[0].fields
+}
+
+var data = {
+    payer: obj,
+    payments: pay,
+    period: convertDate(obj.invoice.period)
 }
 
 
 // Добавим верхнюю часть Шапки
 $('.header__top').append(
-    `<p class="header__top--payer"> За <span style="font-weight: bold; font-size: 1.6rem;">${date_obj.payer.period}</span>Плательщик: ${date_obj.payer.name} </p>
-    <p> Адрес: ${date_obj.payer.address}</p>
-    <p> Площащь: ${date_obj.payer.square} м2 Количество проживающих: ${date_obj.payer.num_resident}</p>
-    <p> Управляющая компания: ${date_obj.payer.uk}</p>`,
+    `<p class="header__top--payer"> За <span style="font-weight: bold; font-size: 1.6rem;">${data.period}</span>Плательщик: ${data.payer.user.name} </p>
+    <p> Адрес: ${data.payer.street.street}, д.${data.payer.house.number}</p>
+    <p> Площащь: ${data.payer.appartaments.sq_appart} м2 Количество проживающих: ${data.payer.appartaments.num_owner}</p>
+    <p> Управляющая компания: ${data.payer.invoice.data.uk}</p>`,
 );
 
 // Добавим среднюю часть Шапки
 $('.header__center').append(
-    `<p> получатель платежа: ${date_obj.recipient.name} </p>
-     <p> Адрес сайта: <span class="text__period"> ${date_obj.recipient.url} </span></p>
-     <p> лицевой счет: ${date_obj.payer.personal_account} сумма к оплате: <span class="text__sum"> 4872,86 р.</span></p>`
+    `<p> получатель платежа: ${data.payer.uk.name}, ${data.payer.uk.requisites}  </p>
+     <p> Адрес сайта: <span class="text__period"> ${data.payer.uk.web_addr} </span></p>
+     <p> лицевой счет: ${data.payer.user.personal_account} сумма к оплате: <span class="text__sum"> 4872,86 р.</span></p>`
 );
 
 $('.header__bottom').append('<table style="width: 606px;"></table>');
@@ -313,7 +350,7 @@ $('.body__content > table').append(
 );
 
 // Пройдем циклом по всем элементам массива и сгенерируем строки таблицы
-date_obj.payments.forEach(function (item, i, arr) {
+data.payments.forEach(function (item, i, arr) {
     $('.body__content > table').append(
         `<tr>
         <td class="pad__table">${item.value}</td>
@@ -358,4 +395,3 @@ $('#invoice-pdf').on('click', (function() {
         pdf.save('TEST.pdf');
     });
 }));
-

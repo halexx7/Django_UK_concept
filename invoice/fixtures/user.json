@@ -1,0 +1,11 @@
+[  
+    {
+        "model": "invoice.user",
+        "pk": 1,
+        "fields": {
+            "person_account": "4334459393",
+            "name": "ИВАНОВ ИВАН ИВАНОВИЧ",
+            "appartament": 1
+        }
+    }
+]

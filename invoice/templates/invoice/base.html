@@ -21,15 +21,21 @@
 <body>
 
     {% block content %}
-    {% endblock content %}
+    {% endblock content %}  
     
 
     {% block js %}
 
     <script>
-        const payer = JSON.parse('{{ data | escapejs }}');
+        const user = {{ user }};
+        const appartaments = {{ appartaments }};
+        const house = {{ house }};
+        const city = {{ city }};
+        const street = {{ street }};
+        const uk = {{ uk }};
+        const invoice = {{ invoice }};
     </script>
-    
+
     <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- jsPDF -->
@@ -38,15 +44,7 @@
     <script src="{% static 'js/html2canvas.js' %}"></script>
     <!-- Javascript -->
     <script src="{% static 'js/invoice.js' %}"></script>
-    
-    
-
-    {% endblock js %}
-    <!-- {% block expoJS %}
-    <script>
-        const payer = '{{ data|safe }}';
-    </script>
-    {% endblock expoJS %} -->
+    {% endblock js %}  
 
 </body>
 
