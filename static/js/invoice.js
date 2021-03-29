@@ -274,6 +274,15 @@ function convertDate(item) {
     }
 }
 
+const obj ={
+    'user': user[0].fields,
+    'appartaments': appartaments[0].fields,
+    'house': house[0].fields,
+    'city': city[0].fields,
+    'street': street[0].fields,
+    'uk': uk[0].fields,
+    'invoice': invoice[0].fields
+}
 
 var data = {
     payer: obj,

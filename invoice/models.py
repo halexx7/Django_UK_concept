@@ -16,6 +16,9 @@ class TypeServices(models.Model):
     standard = models.DecimalField(verbose_name="standard", max_digits=5, decimal_places=2)
     rate = models.DecimalField(verbose_name="standard", max_digits=6, decimal_places=2)
 
+    class Meta:
+        default_related_name = 'Services'
+
     def __str__(self):
         return self.name
 
@@ -23,12 +26,18 @@ class TypeServices(models.Model):
 class City(models.Model):
     city = models.CharField(verbose_name="city", max_length=128)
 
+    class Meta:
+        default_related_name = 'city'
+
     def __str__(self):
         return self.city
 
 
 class Street(models.Model):
     street = models.CharField(verbose_name="street", max_length=128)
+
+    class Meta:
+        default_related_name = 'street'
 
     def __str__(self):
         return self.street
@@ -39,6 +48,9 @@ class UK(models.Model):
     name = models.CharField(verbose_name="services", max_length=128)
     requisites = models.TextField(verbose_name="requisites")
     web_addr = models.CharField(verbose_name="services", max_length=128)
+
+    class Meta:
+        default_related_name = 'uk'
 
     def __str__(self):
         return self.name
@@ -51,6 +63,9 @@ class House(models.Model):
     sq_home = models.DecimalField(verbose_name="sq_home", max_digits=5, decimal_places=2)
     uk = models.ForeignKey(UK, on_delete=CASCADE)
 
+    class Meta:
+        default_related_name = 'house'
+
     def __str__(self):
         return self.street
 
@@ -61,9 +76,15 @@ class Appartament(models.Model):
     sq_appart = models.DecimalField(verbose_name="sq_appart", max_digits=5, decimal_places=2)
     num_owner = models.PositiveIntegerField(verbose_name="num_owner", default=0)
 
+    class Meta:
+        default_related_name = 'appartament'
+
 
 class User(models.Model):
     personal_account = models.CharField(verbose_name="personal_account", max_length=32, unique=True)
     name = models.CharField(verbose_name="user_name", max_length=128)
     appartament = models.ForeignKey(Appartament, on_delete=CASCADE, default=1)
     invoice = models.ForeignKey(Invoice, on_delete=CASCADE, default=1)
+
+    class Meta:
+        default_related_name = 'user'

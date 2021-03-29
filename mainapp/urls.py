@@ -6,6 +6,7 @@ import invoice.views as invoice
 
 urlpatterns = [
     path('invoice/', invoice.InvoiceViews.as_view(), name='invoice'),
+    # path('invoice/', invoice.main, name='invoice'),
 ]
 
 if settings.DEBUG:
